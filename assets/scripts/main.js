@@ -174,67 +174,6 @@
         const unavailableModal = document.getElementById('videoUnavailableModal');
         const unavailableMessage = document.getElementById('videoUnavailableMessage');
         const closeUnavailableNotice = document.getElementById('closeUnavailableNotice');
-        const backgroundMusic = document.getElementById('backgroundMusic');
-        let resumeMusicAfterVideo = false;
-        let musicStartPending = false;
-        let videoSelected = false;
-
-        backgroundMusic.volume = 0.4;
-
-        function iniciarMusicaDeFondo() {
-            if (musicStartPending || !backgroundMusic.paused) {
-                return;
-            }
-            musicStartPending = true;
-            backgroundMusic.play().then(() => {
-                musicStartPending = false;
-                if (videoSelected) {
-                    resumeMusicAfterVideo = true;
-                    backgroundMusic.pause();
-                }
-            }).catch((error) => {
-                musicStartPending = false;
-                if (error.name === 'NotAllowedError') {
-                    window.addEventListener('pointerdown', iniciarMusicaTrasInteraccion, { once: true });
-                    window.addEventListener('keydown', iniciarMusicaTrasInteraccion, { once: true });
-                    return;
-                }
-                if (error.name === 'AbortError' && videoSelected) {
-                    return;
-                }
-                console.error('No se pudo reproducir la música de fondo:', error);
-            });
-        }
-
-        function iniciarMusicaTrasInteraccion() {
-            window.removeEventListener('pointerdown', iniciarMusicaTrasInteraccion);
-            window.removeEventListener('keydown', iniciarMusicaTrasInteraccion);
-            iniciarMusicaDeFondo();
-        }
-
-        backgroundMusic.addEventListener('error', () => {
-            console.error('No se pudo cargar el audio assets/audio/music.mp3.');
-        });
-
-        iniciarMusicaDeFondo();
-
-        function pausarMusicaParaVideo() {
-            videoSelected = true;
-            resumeMusicAfterVideo = !backgroundMusic.paused || musicStartPending;
-            if (resumeMusicAfterVideo) {
-                backgroundMusic.pause();
-            }
-        }
-
-        function reanudarMusicaDespuesVideo() {
-            if (!resumeMusicAfterVideo) {
-                return;
-            }
-            resumeMusicAfterVideo = false;
-            backgroundMusic.play().catch((error) => {
-                console.error('No se pudo reanudar la música de fondo:', error);
-            });
-        }
 
         function mostrarAvisoVideoNoDisponible(mensaje) {
             unavailableMessage.textContent = mensaje || "Estamos preparando este video. Estará disponible próximamente.";
@@ -270,7 +209,6 @@
             }
 
             drivePlayer.src = convertirLinkDrive(pelicula.driveUrl);
-            pausarMusicaParaVideo();
             modal.classList.add('active');
         }
 
@@ -300,14 +238,12 @@
                         return;
                     }
                     drivePlayer.src = convertirLinkDrive(episodio.driveUrl);
-                    pausarMusicaParaVideo();
                 });
             });
         }
 
         function abrirSerie(serie) {
             drivePlayer.src = "";
-            videoSelected = false;
             playerWrapper.classList.add('series-player');
             episodePanel.hidden = false;
             episodePanel.innerHTML = `
@@ -341,8 +277,6 @@
             playerWrapper.classList.remove('series-player');
             episodePanel.hidden = true;
             episodePanel.innerHTML = "";
-            videoSelected = false;
-            reanudarMusicaDespuesVideo();
         }
 
         modal.addEventListener('click', (e) => {
