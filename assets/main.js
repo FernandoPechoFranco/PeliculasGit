@@ -83,7 +83,7 @@
                 categoria: "tendencias",
                 anio: "Próximo estreno • Acción",
                 imagen: "https://image.tmdb.org/t/p/w342//fBFjaDWfNslvrs6bJjknmG27wOS.jpg",
-                driveUrl: ""
+                driveUrl: "https://drive.google.com/file/d/1XD6Ag5a4S21ZVcuMjepTfo-B_Kf9H8cN/view?usp=sharing"
             },
             {
                 titulo: "Titanic",
