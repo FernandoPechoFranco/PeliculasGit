@@ -127,6 +127,30 @@
                 anio: "2025 • Full HD",
                 imagen: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80",
                 driveUrl: ""
+            },
+            {
+                titulo: "Los Ángeles de Charlie",
+                etiqueta: "Película 1",
+                categoria: "accion",
+                anio: "2000 • Acción • Comedia",
+                imagen: "https://m.media-amazon.com/images/S/pv-target-images/7b6b9e6adc56fff98324e469c198dba7f56177fa7f1ce058c3d7a0c9f50589bf._SX1080_FMjpg_.jpg",
+                driveUrl: ""
+            },
+            {
+                titulo: "Los Ángeles de Charlie: Al límite",
+                etiqueta: "Película 2",
+                categoria: "accion",
+                anio: "2003 • Acción • Comedia",
+                imagen: "https://m.media-amazon.com/images/S/pv-target-images/a15dd8621bcdc70389c436c321e49a42169e6068a34d935845c27db61a274438.jpg",
+                driveUrl: ""
+            },
+            {
+                titulo: "Los Ángeles de Charlie",
+                etiqueta: "Película 3",
+                categoria: "accion",
+                anio: "2019 • Acción • Comedia",
+                imagen: "https://occ-0-2219-2218.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABTlpeGD0LPZTZUudxlIGZi_5CmwiRvYratqcuWR8RCtu-5rYLP34shtQtGk8HvwjY2tz2QdG0VvKkE84TyOxTlqWqtAUgWE1MSBV.jpg?r=928",
+                driveUrl: ""
             }
         ];
 
