@@ -93,6 +93,14 @@
                 imagen: "https://image.tmdb.org/t/p/w342//VMOt5scbGmBKDvkfHjZN6Ki54i.jpg",
                 driveUrl: ""
             },
+            {
+                titulo: "El drama",
+                etiqueta: "Drama",
+                categoria: "tendencias",
+                anio: "2026 • Drama • HD",
+                imagen: "https://m.media-amazon.com/images/S/pv-target-images/0e45196fab4af58a53ab6b4ea5b3c41e77d06515a58fcf9f742babf2712af5f1.jpg",
+                driveUrl: ""
+            },
 
             // --- SERIES ---
             {
@@ -291,6 +299,10 @@
             const rowTendencias = document.getElementById('rowTendencias');
             const rowSeries = document.getElementById('rowSeries');
             const rowAccion = document.getElementById('rowAccion');
+            const rowComedia = document.getElementById('rowComedia');
+            const rowDrama = document.getElementById('rowDrama');
+            const rowRomance = document.getElementById('rowRomance');
+            const rowAnimacion = document.getElementById('rowAnimacion');
 
             peliculas.forEach(peli => {
                 // Configurar Banner Principal
@@ -304,6 +316,7 @@
                 // Crear tarjeta HTML
                 const card = document.createElement('div');
                 card.className = 'movie-card';
+                card.dataset.search = `${peli.titulo} ${peli.etiqueta || ''} ${peli.anio || ''} ${peli.categoria}`.toLowerCase();
                 card.innerHTML = `
                     <div class="card-bg-fallback"><span>${peli.titulo}</span></div>
                     ${peli.etiqueta ? `<div class="card-number">${peli.etiqueta}</div>` : ''}
@@ -322,8 +335,52 @@
                     rowTendencias.appendChild(card);
                 } else if (peli.categoria === 'series') {
                     rowSeries.appendChild(card);
-                } else {
+                } else if (peli.categoria === 'accion') {
                     rowAccion.appendChild(card);
+                } else if (peli.categoria === 'comedia') {
+                    rowComedia.appendChild(card);
+                } else if (peli.categoria === 'drama') {
+                    rowDrama.appendChild(card);
+                } else if (peli.categoria === 'romance') {
+                    rowRomance.appendChild(card);
+                } else if (peli.categoria === 'animacion') {
+                    rowAnimacion.appendChild(card);
+                }
+            });
+        }
+
+        function configurarBuscador() {
+            const searchInput = document.getElementById('catalogSearch');
+            const catalog = document.querySelector('.catalog');
+            const noResults = document.createElement('div');
+            noResults.className = 'search-no-results';
+            noResults.hidden = true;
+            noResults.textContent = 'No se encontraron películas ni series.';
+            catalog.appendChild(noResults);
+
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.trim().toLowerCase();
+                let matches = 0;
+
+                document.querySelectorAll('.movie-card').forEach(card => {
+                    const visible = !query || card.dataset.search.includes(query);
+                    card.hidden = !visible;
+                    if (visible) matches++;
+                });
+
+                document.querySelectorAll('.row').forEach(row => {
+                    const visibleCards = row.querySelectorAll('.movie-card:not([hidden])');
+                    row.hidden = Boolean(query) && visibleCards.length === 0;
+                });
+
+                noResults.hidden = !query || matches > 0;
+            });
+
+            searchInput.addEventListener('keydown', event => {
+                if (event.key === 'Escape') {
+                    searchInput.value = '';
+                    searchInput.dispatchEvent(new Event('input'));
+                    searchInput.blur();
                 }
             });
         }
@@ -340,4 +397,5 @@
 
         // Iniciar aplicación
         cargarCatalogo();
+        configurarBuscador();
     
