@@ -175,47 +175,54 @@
         const unavailableMessage = document.getElementById('videoUnavailableMessage');
         const closeUnavailableNotice = document.getElementById('closeUnavailableNotice');
         const backgroundMusic = document.getElementById('backgroundMusic');
-        const musicToggle = document.getElementById('musicToggle');
-        const musicVolume = document.getElementById('musicVolume');
-        const musicStatus = document.getElementById('musicStatus');
         let resumeMusicAfterVideo = false;
+        let musicStartPending = false;
+        let videoSelected = false;
 
-        backgroundMusic.volume = Number(musicVolume.value);
+        backgroundMusic.volume = 0.4;
 
-        function actualizarBotonMusica() {
-            musicToggle.textContent = backgroundMusic.paused ? "▶ Música de fondo" : "❚❚ Pausar música";
-            musicToggle.setAttribute('aria-pressed', String(!backgroundMusic.paused));
+        function iniciarMusicaDeFondo() {
+            if (musicStartPending || !backgroundMusic.paused) {
+                return;
+            }
+            musicStartPending = true;
+            backgroundMusic.play().then(() => {
+                musicStartPending = false;
+                if (videoSelected) {
+                    resumeMusicAfterVideo = true;
+                    backgroundMusic.pause();
+                }
+            }).catch((error) => {
+                musicStartPending = false;
+                if (error.name === 'NotAllowedError') {
+                    window.addEventListener('pointerdown', iniciarMusicaTrasInteraccion, { once: true });
+                    window.addEventListener('keydown', iniciarMusicaTrasInteraccion, { once: true });
+                    return;
+                }
+                if (error.name === 'AbortError' && videoSelected) {
+                    return;
+                }
+                console.error('No se pudo reproducir la música de fondo:', error);
+            });
         }
 
-        musicToggle.addEventListener('click', () => {
-            musicStatus.hidden = true;
-            if (backgroundMusic.paused) {
-                backgroundMusic.play().then(actualizarBotonMusica).catch((error) => {
-                    musicStatus.textContent = "No se pudo reproducir music.mp3 desde assets/audio/.";
-                    musicStatus.hidden = false;
-                    console.error('No se pudo reproducir la música de fondo:', error);
-                });
-            } else {
-                backgroundMusic.pause();
-                actualizarBotonMusica();
-            }
-        });
-
-        musicVolume.addEventListener('input', () => {
-            backgroundMusic.volume = Number(musicVolume.value);
-        });
+        function iniciarMusicaTrasInteraccion() {
+            window.removeEventListener('pointerdown', iniciarMusicaTrasInteraccion);
+            window.removeEventListener('keydown', iniciarMusicaTrasInteraccion);
+            iniciarMusicaDeFondo();
+        }
 
         backgroundMusic.addEventListener('error', () => {
-            musicStatus.textContent = "No se encontró assets/audio/music.mp3.";
-            musicStatus.hidden = false;
-            musicToggle.disabled = true;
+            console.error('No se pudo cargar el audio assets/audio/music.mp3.');
         });
 
+        iniciarMusicaDeFondo();
+
         function pausarMusicaParaVideo() {
-            resumeMusicAfterVideo = !backgroundMusic.paused;
+            videoSelected = true;
+            resumeMusicAfterVideo = !backgroundMusic.paused || musicStartPending;
             if (resumeMusicAfterVideo) {
                 backgroundMusic.pause();
-                actualizarBotonMusica();
             }
         }
 
@@ -224,9 +231,7 @@
                 return;
             }
             resumeMusicAfterVideo = false;
-            backgroundMusic.play().then(actualizarBotonMusica).catch((error) => {
-                musicStatus.textContent = "No se pudo reanudar la música de fondo.";
-                musicStatus.hidden = false;
+            backgroundMusic.play().catch((error) => {
                 console.error('No se pudo reanudar la música de fondo:', error);
             });
         }
@@ -302,6 +307,7 @@
 
         function abrirSerie(serie) {
             drivePlayer.src = "";
+            videoSelected = false;
             playerWrapper.classList.add('series-player');
             episodePanel.hidden = false;
             episodePanel.innerHTML = `
@@ -335,6 +341,7 @@
             playerWrapper.classList.remove('series-player');
             episodePanel.hidden = true;
             episodePanel.innerHTML = "";
+            videoSelected = false;
             reanudarMusicaDespuesVideo();
         }
 
