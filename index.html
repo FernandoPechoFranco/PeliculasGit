@@ -15,6 +15,7 @@
         <ul class="nav-links">
             <li><a href="#" class="active">Inicio</a></li>
             <li><a href="#conjuro">Saga El Conjuro</a></li>
+            <li><a href="#series">Series</a></li>
             <li><a href="#tendencias">Tendencias</a></li>
             <li><a href="#accion">Acción</a></li>
         </ul>
@@ -56,6 +57,15 @@
             <div class="cards-container" id="rowTendencias"></div>
         </section>
 
+        <!-- SECCIÓN SERIES -->
+        <section class="row" id="series">
+            <div class="row-header">
+                <h2 class="row-title">Series</h2>
+                <span class="row-tag">Temporadas y capítulos</span>
+            </div>
+            <div class="cards-container" id="rowSeries"></div>
+        </section>
+
         <!-- SECCIÓN ACCIÓN -->
         <section class="row" id="accion">
             <div class="row-header">
@@ -68,6 +78,7 @@
     <!-- Modal del Reproductor -->
     <div class="modal" id="videoModal">
         <div class="player-wrapper">
+            <aside class="episode-panel" id="episodePanel" hidden></aside>
             <div class="video-container">
                 <iframe id="drivePlayer" allow="autoplay; fullscreen" allowfullscreen></iframe>
             </div>

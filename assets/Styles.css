@@ -373,4 +373,89 @@
             height: 100%;
             border: none;
         }
+
+        .player-wrapper.series-player {
+            width: min(96vw, 1380px);
+            height: min(82vh, 760px);
+            flex-direction: row;
+        }
+
+        .episode-panel {
+            width: 320px;
+            flex: 0 0 320px;
+            padding: 18px;
+            background: #101014;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            overflow-y: auto;
+        }
+
+        .episode-panel h3 {
+            margin-bottom: 14px;
+            font-size: 1.1rem;
+        }
+
+        .season-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .season-tab,
+        .episode-button {
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            cursor: pointer;
+            border-radius: 7px;
+        }
+
+        .season-tab {
+            flex: 1;
+            padding: 9px 6px;
+        }
+
+        .season-tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .episode-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .episode-button {
+            min-height: 42px;
+            padding: 8px 4px;
+        }
+
+        .episode-button:hover,
+        .episode-button.active {
+            background: #fff;
+            color: #09090b;
+        }
+
+        .series-player .video-container {
+            min-width: 0;
+        }
+
+        @media (max-width: 760px) {
+            .modal {
+                padding: 8px;
+            }
+
+            .player-wrapper.series-player {
+                width: 100%;
+                height: 92vh;
+                flex-direction: column;
+            }
+
+            .episode-panel {
+                width: 100%;
+                flex: 0 0 210px;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            }
+        }
     

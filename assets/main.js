@@ -77,6 +77,33 @@
                 imagen: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
                 driveUrl: ""
             },
+            {
+                titulo: "Spider-Man: Un nuevo día",
+                etiqueta: "Nueva película",
+                categoria: "tendencias",
+                anio: "Próximo estreno • Acción",
+                imagen: "https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=800&q=80",
+                driveUrl: ""
+            },
+
+            // --- SERIES ---
+            {
+                titulo: "La musa de la Sección E",
+                etiqueta: "Serie • 2 temporadas",
+                categoria: "series",
+                anio: "Drama • 34 capítulos",
+                imagen: "https://1.vikiplatform.com/c/41267c/d32d024d4c.jpg?x=b",
+                temporadas: {
+                    1: Array.from({ length: 16 }, (_, i) => ({
+                        titulo: `Capítulo ${i + 1}`,
+                        driveUrl: ""
+                    })),
+                    2: Array.from({ length: 18 }, (_, i) => ({
+                        titulo: `Capítulo ${i + 1}`,
+                        driveUrl: ""
+                    }))
+                }
+            },
 
             // --- ACCIÓN ---
             {
@@ -110,10 +137,74 @@
         // Elementos del DOM
         const modal = document.getElementById('videoModal');
         const drivePlayer = document.getElementById('drivePlayer');
+        const playerWrapper = document.querySelector('.player-wrapper');
+        const episodePanel = document.getElementById('episodePanel');
 
         // Abrir reproductor
         function abrirVideo(pelicula) {
+            playerWrapper.classList.remove('series-player');
+            episodePanel.hidden = true;
+            episodePanel.innerHTML = "";
+
+            if (!pelicula.driveUrl) {
+                alert("Todavía no hay un enlace de Drive configurado para esta película.");
+                return;
+            }
+
             drivePlayer.src = convertirLinkDrive(pelicula.driveUrl);
+            modal.classList.add('active');
+        }
+
+        function mostrarTemporada(serie, numeroTemporada) {
+            const episodios = serie.temporadas[numeroTemporada];
+            const seasonTabs = episodePanel.querySelectorAll('.season-tab');
+            seasonTabs.forEach((tab, index) => {
+                tab.classList.toggle('active', index + 1 === numeroTemporada);
+            });
+
+            const episodeList = episodePanel.querySelector('.episode-list');
+            episodeList.innerHTML = episodios.map((episodio, index) => `
+                <button class="episode-button" type="button" data-episode="${index}">
+                    ${index + 1}
+                </button>
+            `).join("");
+
+            episodeList.querySelectorAll('.episode-button').forEach((button, index) => {
+                button.addEventListener('click', () => {
+                    episodeList.querySelectorAll('.episode-button').forEach(item => item.classList.remove('active'));
+                    button.classList.add('active');
+
+                    const episodio = episodios[index];
+                    if (!episodio.driveUrl) {
+                        alert(`Falta el enlace de Drive para ${episodio.titulo} - Temporada ${numeroTemporada}.`);
+                        drivePlayer.src = "";
+                        return;
+                    }
+                    drivePlayer.src = convertirLinkDrive(episodio.driveUrl);
+                });
+            });
+        }
+
+        function abrirSerie(serie) {
+            drivePlayer.src = "";
+            playerWrapper.classList.add('series-player');
+            episodePanel.hidden = false;
+            episodePanel.innerHTML = `
+                <h3>${serie.titulo}</h3>
+                <div class="season-tabs">
+                    <button class="season-tab active" type="button" data-season="1">Temporada 1</button>
+                    <button class="season-tab" type="button" data-season="2">Temporada 2</button>
+                </div>
+                <div class="episode-list"></div>
+            `;
+
+            episodePanel.querySelectorAll('.season-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    mostrarTemporada(serie, Number(tab.dataset.season));
+                });
+            });
+
+            mostrarTemporada(serie, 1);
             modal.classList.add('active');
         }
 
@@ -121,6 +212,9 @@
         function cerrarVideo() {
             modal.classList.remove('active');
             drivePlayer.src = "";
+            playerWrapper.classList.remove('series-player');
+            episodePanel.hidden = true;
+            episodePanel.innerHTML = "";
         }
 
         modal.addEventListener('click', (e) => {
@@ -133,6 +227,7 @@
         function cargarCatalogo() {
             const rowConjuro = document.getElementById('rowConjuro');
             const rowTendencias = document.getElementById('rowTendencias');
+            const rowSeries = document.getElementById('rowSeries');
             const rowAccion = document.getElementById('rowAccion');
 
             peliculas.forEach(peli => {
@@ -157,12 +252,14 @@
                         <div class="card-meta">${peli.anio}</div>
                     </div>
                 `;
-                card.onclick = () => abrirVideo(peli);
+                card.onclick = () => peli.temporadas ? abrirSerie(peli) : abrirVideo(peli);
 
                 if (peli.categoria === 'conjuro') {
                     rowConjuro.appendChild(card);
                 } else if (peli.categoria === 'tendencias') {
                     rowTendencias.appendChild(card);
+                } else if (peli.categoria === 'series') {
+                    rowSeries.appendChild(card);
                 } else {
                     rowAccion.appendChild(card);
                 }
