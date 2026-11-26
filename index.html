@@ -333,12 +333,10 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.94);
-            backdrop-filter: blur(16px);
+            background: #000;
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            padding: 30px;
             animation: fadeIn 0.25s ease;
         }
 
@@ -354,49 +352,42 @@
         .player-wrapper {
             position: relative;
             width: 100%;
-            max-width: 1120px;
+            height: 100%;
             background: #000;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 25px 65px rgba(0, 0, 0, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .player-header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 24px;
-            background: #121216;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-direction: column;
+            overflow: hidden;
         }
 
-        .player-header h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
+        .player-wrapper:fullscreen {
+            width: 100vw;
+            height: 100vh;
         }
 
         .close-btn {
-            background: rgba(255, 255, 255, 0.1);
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 2;
+            padding: 10px 16px;
+            background: rgba(0, 0, 0, 0.7);
             border: none;
             color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            font-size: 1.2rem;
+            border-radius: 8px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: background 0.2s, transform 0.2s;
+            transition: background 0.2s;
         }
 
         .close-btn:hover {
             background: var(--primary);
-            transform: rotate(90deg);
         }
 
         .video-container {
             position: relative;
             width: 100%;
-            aspect-ratio: 16 / 9;
+            flex: 1;
+            min-height: 0;
             background: #050505;
         }
 
@@ -468,10 +459,7 @@
     <!-- Modal del Reproductor -->
     <div class="modal" id="videoModal">
         <div class="player-wrapper">
-            <div class="player-header">
-                <h3 id="modalTitle">Reproduciendo video</h3>
-                <button class="close-btn" id="closeModal">✕</button>
-            </div>
+            <button class="close-btn" id="closeModal" aria-label="Salir del reproductor">Salir ✕</button>
             <div class="video-container">
                 <iframe id="drivePlayer" allow="autoplay; fullscreen" allowfullscreen></iframe>
             </div>
@@ -589,24 +577,40 @@
 
         // Elementos del DOM
         const modal = document.getElementById('videoModal');
+        const playerWrapper = document.querySelector('.player-wrapper');
         const drivePlayer = document.getElementById('drivePlayer');
-        const modalTitle = document.getElementById('modalTitle');
         const closeModal = document.getElementById('closeModal');
 
         // Abrir reproductor
         function abrirVideo(pelicula) {
-            modalTitle.textContent = pelicula.titulo;
             drivePlayer.src = convertirLinkDrive(pelicula.driveUrl);
             modal.classList.add('active');
+
+            if (playerWrapper.requestFullscreen) {
+                playerWrapper.requestFullscreen().catch(error => {
+                    console.error('No se pudo activar la pantalla completa:', error);
+                });
+            }
         }
 
         // Cerrar reproductor y detener video
         function cerrarVideo() {
             modal.classList.remove('active');
             drivePlayer.src = "";
+
+            if (document.fullscreenElement === playerWrapper) {
+                document.exitFullscreen().catch(error => {
+                    console.error('No se pudo salir de la pantalla completa:', error);
+                });
+            }
         }
 
         closeModal.addEventListener('click', cerrarVideo);
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement && modal.classList.contains('active')) {
+                cerrarVideo();
+            }
+        });
         modal.addEventListener('click', (e) => {
             if (e.target === modal) cerrarVideo();
         });
