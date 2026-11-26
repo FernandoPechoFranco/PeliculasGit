@@ -82,7 +82,15 @@
                 etiqueta: "Nueva película",
                 categoria: "tendencias",
                 anio: "Próximo estreno • Acción",
-                imagen: "https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=800&q=80",
+                imagen: "https://image.tmdb.org/t/p/w342//fBFjaDWfNslvrs6bJjknmG27wOS.jpg",
+                driveUrl: ""
+            },
+            {
+                titulo: "Titanic",
+                etiqueta: "Romance",
+                categoria: "tendencias",
+                anio: "1997 • Romance • HD",
+                imagen: "https://image.tmdb.org/t/p/w342//VMOt5scbGmBKDvkfHjZN6Ki54i.jpg",
                 driveUrl: ""
             },
 
@@ -190,13 +198,18 @@
             playerWrapper.classList.add('series-player');
             episodePanel.hidden = false;
             episodePanel.innerHTML = `
-                <h3>${serie.titulo}</h3>
+                <div class="episode-header">
+                    <button class="back-button" type="button" aria-label="Regresar al catálogo">← Regresar</button>
+                    <h3>${serie.titulo}</h3>
+                </div>
                 <div class="season-tabs">
                     <button class="season-tab active" type="button" data-season="1">Temporada 1</button>
                     <button class="season-tab" type="button" data-season="2">Temporada 2</button>
                 </div>
                 <div class="episode-list"></div>
             `;
+
+            episodePanel.querySelector('.back-button').addEventListener('click', cerrarVideo);
 
             episodePanel.querySelectorAll('.season-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
