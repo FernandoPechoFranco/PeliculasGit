@@ -102,52 +102,31 @@
             const regex = /(?:\/d\/|id=)([a-zA-Z0-9_-]+)/;
             const match = url.match(regex);
             if (match && match[1]) {
-                return `https://drive.google.com/file/d/${match[1]}/preview?autoplay=1`;
+                return `https://drive.google.com/file/d/${match[1]}/preview`;
             }
             return url;
         }
 
         // Elementos del DOM
         const modal = document.getElementById('videoModal');
-        const playerWrapper = document.querySelector('.player-wrapper');
         const drivePlayer = document.getElementById('drivePlayer');
-        const closeModal = document.getElementById('closeModal');
 
         // Abrir reproductor
         function abrirVideo(pelicula) {
             drivePlayer.src = convertirLinkDrive(pelicula.driveUrl);
             modal.classList.add('active');
-
-            if (playerWrapper.requestFullscreen) {
-                playerWrapper.requestFullscreen().catch(error => {
-                    console.error('No se pudo activar la pantalla completa:', error);
-                });
-            }
         }
 
-        // Cerrar reproductor y detener video
+        // Cerrar al hacer clic fuera de la ventana del reproductor
         function cerrarVideo() {
             modal.classList.remove('active');
             drivePlayer.src = "";
-
-            if (document.fullscreenElement === playerWrapper) {
-                document.exitFullscreen().catch(error => {
-                    console.error('No se pudo salir de la pantalla completa:', error);
-                });
-            }
         }
 
-        closeModal.addEventListener('click', cerrarVideo);
-        document.addEventListener('fullscreenchange', () => {
-            if (!document.fullscreenElement && modal.classList.contains('active')) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
                 cerrarVideo();
             }
-        });
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) cerrarVideo();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') cerrarVideo();
         });
 
         // Renderizar tarjetas en pantalla
