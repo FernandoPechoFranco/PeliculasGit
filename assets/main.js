@@ -50,7 +50,7 @@
                 anio: "2018 • Terror • HD",
                 imagen: "https://es.web.img2.acsta.net/pictures/18/08/14/15/35/4396669.jpg",
                 // Pega aquí tu link de Google Drive de La Monja / 5ta película
-                driveUrl: "https://drive.google.com/file/d/TU_ID_CONJURO_5/view"
+                driveUrl: ""
             },
             {
                 titulo: "Annabelle Vuelve a Casa",
@@ -59,7 +59,7 @@
                 anio: "2019 • Terror • HD",
                 imagen: "https://m.media-amazon.com/images/S/pv-target-images/84acdb04fedf5cb042e358ec9d1bcc20128477f34a0ef7c822bd70eff2870dcf.jpg",
                 // Pega aquí tu link de Google Drive de Annabelle / 6ta película
-                driveUrl: "https://drive.google.com/file/d/TU_ID_CONJURO_6/view"
+                driveUrl: ""
             },
 
             // --- TENDENCIAS ---
@@ -68,14 +68,14 @@
                 categoria: "tendencias",
                 anio: "2025 • 4K",
                 imagen: "https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=800&q=80",
-                driveUrl: "https://drive.google.com/file/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/view"
+                driveUrl: ""
             },
             {
                 titulo: "Abismo Espacial",
                 categoria: "tendencias",
                 anio: "2026 • Full HD",
                 imagen: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
-                driveUrl: "https://drive.google.com/file/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/view"
+                driveUrl: ""
             },
 
             // --- ACCIÓN ---
@@ -84,14 +84,14 @@
                 categoria: "accion",
                 anio: "2026 • 4K",
                 imagen: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80",
-                driveUrl: "https://drive.google.com/file/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/view"
+                driveUrl: ""
             },
             {
                 titulo: "Cumbre Helada",
                 categoria: "accion",
                 anio: "2025 • Full HD",
                 imagen: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80",
-                driveUrl: "https://drive.google.com/file/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/view"
+                driveUrl: ""
             }
         ];
 
@@ -102,7 +102,7 @@
             const regex = /(?:\/d\/|id=)([a-zA-Z0-9_-]+)/;
             const match = url.match(regex);
             if (match && match[1]) {
-                return `https://drive.google.com/file/d/${match[1]}/preview`;
+                return `https://drive.google.com/file/d/${match[1]}/preview?autoplay=1`;
             }
             return url;
         }
