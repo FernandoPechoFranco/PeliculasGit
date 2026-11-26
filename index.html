@@ -8,7 +8,6 @@
     <link rel="icon" type="image/svg+xml" href="assets/image/logo.svg">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/styles/login.css">
-    <script src="assets/scripts/auth.js"></script>
 </head>
 <body>
     <header class="topbar">
@@ -32,12 +31,12 @@
         <section class="login-card" aria-labelledby="login-title">
             <p class="card-kicker">Bienvenido de nuevo</p>
             <h2 id="login-title">Inicia sesión</h2>
-            <p class="card-copy">Ingresa tus datos para continuar.</p>
+            <p class="card-copy">Ingresa con el usuario <strong>admin</strong> y la contraseña <strong>admin</strong>.</p>
 
             <form id="loginForm">
                 <div class="field">
-                    <label for="email">Correo electrónico</label>
-                    <input id="email" name="email" type="email" placeholder="tu@correo.com" autocomplete="email" required>
+                    <label for="username">Usuario</label>
+                    <input id="username" name="username" type="text" placeholder="Usuario" autocomplete="username" required>
                 </div>
 
                 <div class="field">
@@ -48,20 +47,11 @@
                     </div>
                 </div>
 
-                <div class="form-options">
-                    <label class="remember" for="remember">
-                        <input id="remember" name="remember" type="checkbox">
-                        <span>Recordarme</span>
-                    </label>
-                    <a class="text-link" href="#" id="forgotPassword">¿Olvidaste tu contraseña?</a>
-                </div>
-
                 <button class="submit-button" type="submit">Entrar a StreamFlix <span aria-hidden="true">→</span></button>
                 <p class="status-message" id="formMessage" role="status" aria-live="polite"></p>
             </form>
 
-            <p class="signup">¿Aún no tienes cuenta? <a class="text-link" href="#" id="signupLink">Crear cuenta</a></p>
-            <div class="card-footer"><span>●</span> Acceso seguro <span>•</span> Tu cine, a tu manera</div>
+            <div class="card-footer"><span>●</span> Acceso de demostración <span>•</span> Tu cine, a tu manera</div>
         </section>
     </main>
     <script src="assets/scripts/login.js"></script>
