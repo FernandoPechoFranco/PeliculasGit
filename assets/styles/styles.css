@@ -524,21 +524,204 @@
         }
 
         @media (max-width: 760px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 10px 5% 8px;
+                background: rgba(9, 9, 11, 0.94);
+                backdrop-filter: blur(14px);
+            }
+
+            .logo {
+                gap: 7px;
+                font-size: 1.5rem;
+            }
+
+            .logo img {
+                width: 32px;
+                height: 32px;
+            }
+
+            .nav-links {
+                width: 100%;
+                gap: 20px;
+                overflow-x: auto;
+                padding-bottom: 4px;
+                scrollbar-width: none;
+            }
+
+            .nav-links::-webkit-scrollbar {
+                display: none;
+            }
+
+            .nav-links li {
+                flex: 0 0 auto;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+                white-space: nowrap;
+            }
+
+            .hero {
+                height: 82vh;
+                min-height: 570px;
+                align-items: flex-end;
+                padding: 130px 5% 48px;
+                background-position: center;
+            }
+
+            .hero::after {
+                background: linear-gradient(0deg, var(--bg-dark) 4%, rgba(9, 9, 11, 0.58) 58%, rgba(9, 9, 11, 0.25) 100%);
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .badge {
+                margin-bottom: 12px;
+                font-size: 0.7rem;
+            }
+
+            .hero-title {
+                font-size: clamp(2.1rem, 9vw, 3rem);
+                line-height: 1.08;
+            }
+
+            .hero-desc {
+                margin-bottom: 20px;
+                font-size: 0.98rem;
+                line-height: 1.5;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+                max-width: 320px;
+            }
+
+            .btn {
+                justify-content: center;
+                padding: 12px 18px;
+                font-size: 0.95rem;
+            }
+
+            .catalog {
+                margin-top: -32px;
+            }
+
+            .row {
+                margin-bottom: 34px;
+                padding: 0 5%;
+            }
+
+            .row-header {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 6px;
+                margin-bottom: 14px;
+            }
+
+            .row-title {
+                font-size: 1.25rem;
+            }
+
+            .row-tag {
+                font-size: 0.65rem;
+            }
+
+            .cards-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            .movie-card {
+                aspect-ratio: 2 / 3;
+                border-radius: 9px;
+            }
+
+            .movie-card:hover {
+                transform: none;
+                box-shadow: none;
+            }
+
+            .movie-card .card-overlay {
+                opacity: 1;
+                padding: 10px;
+                background: linear-gradient(to top, rgba(0, 0, 0, 0.94) 5%, rgba(0, 0, 0, 0.12) 65%);
+            }
+
+            .movie-card:hover img {
+                filter: none;
+            }
+
+            .card-number {
+                top: 7px;
+                left: 7px;
+                padding: 3px 7px;
+                font-size: 0.65rem;
+            }
+
+            .card-play-icon {
+                width: 42px;
+                height: 42px;
+            }
+
+            .card-title {
+                font-size: 0.9rem;
+                line-height: 1.2;
+            }
+
+            .card-meta {
+                font-size: 0.7rem;
+            }
+
             .modal {
                 padding: 8px;
             }
 
+            .player-wrapper {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 16 / 9;
+                max-height: 80vh;
+                border-radius: 8px;
+            }
+
             .player-wrapper.series-player {
                 width: 100%;
-                height: 92vh;
+                height: 94vh;
+                max-height: none;
+                aspect-ratio: auto;
                 flex-direction: column;
             }
 
             .episode-panel {
                 width: 100%;
-                flex: 0 0 210px;
+                flex: 0 0 220px;
                 border-right: none;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            }
+
+            .notice-card {
+                padding: 22px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .nav-links {
+                gap: 15px;
+            }
+
+            .cards-container {
+                gap: 9px;
+            }
+
+            .card-title {
+                font-size: 0.82rem;
             }
         }
     
