@@ -174,6 +174,62 @@
         const unavailableModal = document.getElementById('videoUnavailableModal');
         const unavailableMessage = document.getElementById('videoUnavailableMessage');
         const closeUnavailableNotice = document.getElementById('closeUnavailableNotice');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const musicVolume = document.getElementById('musicVolume');
+        const musicStatus = document.getElementById('musicStatus');
+        let resumeMusicAfterVideo = false;
+
+        backgroundMusic.volume = Number(musicVolume.value);
+
+        function actualizarBotonMusica() {
+            musicToggle.textContent = backgroundMusic.paused ? "▶ Música de fondo" : "❚❚ Pausar música";
+            musicToggle.setAttribute('aria-pressed', String(!backgroundMusic.paused));
+        }
+
+        musicToggle.addEventListener('click', () => {
+            musicStatus.hidden = true;
+            if (backgroundMusic.paused) {
+                backgroundMusic.play().then(actualizarBotonMusica).catch((error) => {
+                    musicStatus.textContent = "No se pudo reproducir music.mp3 desde assets/audio/.";
+                    musicStatus.hidden = false;
+                    console.error('No se pudo reproducir la música de fondo:', error);
+                });
+            } else {
+                backgroundMusic.pause();
+                actualizarBotonMusica();
+            }
+        });
+
+        musicVolume.addEventListener('input', () => {
+            backgroundMusic.volume = Number(musicVolume.value);
+        });
+
+        backgroundMusic.addEventListener('error', () => {
+            musicStatus.textContent = "No se encontró assets/audio/music.mp3.";
+            musicStatus.hidden = false;
+            musicToggle.disabled = true;
+        });
+
+        function pausarMusicaParaVideo() {
+            resumeMusicAfterVideo = !backgroundMusic.paused;
+            if (resumeMusicAfterVideo) {
+                backgroundMusic.pause();
+                actualizarBotonMusica();
+            }
+        }
+
+        function reanudarMusicaDespuesVideo() {
+            if (!resumeMusicAfterVideo) {
+                return;
+            }
+            resumeMusicAfterVideo = false;
+            backgroundMusic.play().then(actualizarBotonMusica).catch((error) => {
+                musicStatus.textContent = "No se pudo reanudar la música de fondo.";
+                musicStatus.hidden = false;
+                console.error('No se pudo reanudar la música de fondo:', error);
+            });
+        }
 
         function mostrarAvisoVideoNoDisponible(mensaje) {
             unavailableMessage.textContent = mensaje || "Estamos preparando este video. Estará disponible próximamente.";
@@ -209,6 +265,7 @@
             }
 
             drivePlayer.src = convertirLinkDrive(pelicula.driveUrl);
+            pausarMusicaParaVideo();
             modal.classList.add('active');
         }
 
@@ -238,6 +295,7 @@
                         return;
                     }
                     drivePlayer.src = convertirLinkDrive(episodio.driveUrl);
+                    pausarMusicaParaVideo();
                 });
             });
         }
@@ -277,6 +335,7 @@
             playerWrapper.classList.remove('series-player');
             episodePanel.hidden = true;
             episodePanel.innerHTML = "";
+            reanudarMusicaDespuesVideo();
         }
 
         modal.addEventListener('click', (e) => {

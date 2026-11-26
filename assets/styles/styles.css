@@ -436,6 +436,54 @@
             background: var(--primary-hover);
         }
 
+        .music-player {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 900;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: calc(100vw - 24px);
+            padding: 10px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 12px;
+            background: rgba(20, 20, 24, 0.94);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+            font-size: 0.85rem;
+        }
+
+        .music-player button {
+            border: none;
+            background: transparent;
+            color: #fff;
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .music-player input[type="range"] {
+            width: 82px;
+            accent-color: var(--primary);
+        }
+
+        .music-player p {
+            position: absolute;
+            right: 0;
+            bottom: calc(100% + 8px);
+            width: min(280px, calc(100vw - 24px));
+            padding: 10px 12px;
+            border-radius: 8px;
+            background: #141418;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        .music-player p[hidden] {
+            display: none;
+        }
+
         .player-wrapper.series-player {
             width: min(96vw, 1380px);
             height: min(82vh, 760px);
