@@ -78,34 +78,6 @@
             font-weight: 600;
         }
 
-        .session-controls {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            white-space: nowrap;
-        }
-
-        .session-controls strong {
-            color: var(--text-main);
-        }
-
-        .session-controls button {
-            padding: 8px 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 6px;
-            background: transparent;
-            color: var(--text-main);
-            cursor: pointer;
-            font: inherit;
-        }
-
-        .session-controls button:hover {
-            border-color: var(--primary);
-            background: var(--primary);
-        }
-
         /* Hero Banner Principal */
         .hero {
             position: relative;
@@ -590,10 +562,6 @@
             .nav-links a {
                 font-size: 0.85rem;
                 white-space: nowrap;
-            }
-
-            .session-controls {
-                align-self: flex-end;
             }
 
             .hero {

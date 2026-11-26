@@ -1,59 +1,106 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#09090b">
-    <title>Iniciar sesión | StreamFlix</title>
+    <title>StreamFlix</title>
     <link rel="icon" type="image/svg+xml" href="assets/image/logo.svg">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/styles/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles/styles.css">
 </head>
 <body>
-    <header class="topbar">
-        <a class="brand" href="index.html" aria-label="StreamFlix, ir al catálogo">
+
+    <!-- Barra de Navegación -->
+    <nav id="navbar">
+        <div class="logo">
             <img src="assets/image/logo.svg" alt="">
             <span>STREAMFLIX</span>
-        </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Inicio</a></li>
+            <li><a href="#conjuro">Saga El Conjuro</a></li>
+            <li><a href="#series">Series</a></li>
+            <li><a href="#tendencias">Tendencias</a></li>
+            <li><a href="#accion">Acción</a></li>
+        </ul>
+        <div class="session-controls">
+            <span>Usuario: <strong id="currentUser"></strong></span>
+            <button id="logoutButton" type="button">Cerrar sesión</button>
+        </div>
+    </nav>
+
+    <!-- Portada Destacada (Hero) -->
+    <header class="hero" id="heroBanner">
+        <div class="hero-content">
+            <span class="badge">SAGA COMPLETA EN DRIVE</span>
+            <h1 class="hero-title" id="heroTitle">El Conjuro: Expediente Warren</h1>
+            <p class="hero-desc" id="heroDesc">Los investigadores paranormales Ed y Lorraine Warren acuden a ayudar a una familia aterrorizada por una presencia oscura en una granja aislada.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-play" id="heroPlayBtn">
+                    <span>▶</span> Reproducir El Conjuro 1
+                </button>
+                <button class="btn btn-info" onclick="document.getElementById('conjuro').scrollIntoView()">
+                    <span>☰</span> Ver toda la saga
+                </button>
+            </div>
+        </div>
     </header>
 
-    <main class="layout">
-        <section class="intro" aria-labelledby="welcome-title">
-            <p class="eyebrow">Tu próxima historia empieza aquí</p>
-            <h1 id="welcome-title">El cine se disfruta <span>mejor juntos.</span></h1>
-            <p class="intro-copy">Entra a tu espacio y prepárate para descubrir historias que se quedan contigo mucho después de los créditos.</p>
-            <div class="film-note">
-                <span class="play-mark" aria-hidden="true">▶</span>
-                <span><strong>Una pantalla. Miles de historias.</strong><small>Tu universo de películas te espera.</small></span>
+    <!-- Catálogo de Videos -->
+    <main class="catalog">
+        <!-- SECCIÓN SAGA EL CONJURO -->
+        <section class="row" id="conjuro">
+            <div class="row-header">
+                <h2 class="row-title">Universo El Conjuro (Saga Completa)</h2>
+                <span class="row-tag">Terror • 6 Películas</span>
             </div>
+            <div class="cards-container" id="rowConjuro"></div>
         </section>
 
-        <section class="login-card" aria-labelledby="login-title">
-            <p class="card-kicker">Bienvenido de nuevo</p>
-            <h2 id="login-title">Inicia sesión</h2>
-            <p class="card-copy">Ingresa con el usuario <strong>admin</strong> y la contraseña <strong>admin</strong>.</p>
+        <!-- SECCIÓN TENDENCIAS -->
+        <section class="row" id="tendencias">
+            <div class="row-header">
+                <h2 class="row-title">Tendencias ahora</h2>
+            </div>
+            <div class="cards-container" id="rowTendencias"></div>
+        </section>
 
-            <form id="loginForm">
-                <div class="field">
-                    <label for="username">Usuario</label>
-                    <input id="username" name="username" type="text" placeholder="Usuario" autocomplete="username" required>
-                </div>
+        <!-- SECCIÓN SERIES -->
+        <section class="row" id="series">
+            <div class="row-header">
+                <h2 class="row-title">Series</h2>
+                <span class="row-tag">Temporadas y capítulos</span>
+            </div>
+            <div class="cards-container" id="rowSeries"></div>
+        </section>
 
-                <div class="field">
-                    <label for="password">Contraseña</label>
-                    <div class="input-wrap">
-                        <input id="password" name="password" type="password" placeholder="Ingresa tu contraseña" autocomplete="current-password" required>
-                        <button class="show-password" id="togglePassword" type="button" aria-label="Mostrar contraseña" aria-pressed="false">Mostrar</button>
-                    </div>
-                </div>
-
-                <button class="submit-button" type="submit">Entrar a StreamFlix <span aria-hidden="true">→</span></button>
-                <p class="status-message" id="formMessage" role="status" aria-live="polite"></p>
-            </form>
-
-            <div class="card-footer"><span>●</span> Acceso de demostración <span>•</span> Tu cine, a tu manera</div>
+        <!-- SECCIÓN ACCIÓN -->
+        <section class="row" id="accion">
+            <div class="row-header">
+                <h2 class="row-title">Acción y Aventura</h2>
+            </div>
+            <div class="cards-container" id="rowAccion"></div>
         </section>
     </main>
-    <script src="assets/scripts/login.js"></script>
+
+    <!-- Modal del Reproductor -->
+    <div class="modal" id="videoModal">
+        <div class="player-wrapper">
+            <aside class="episode-panel" id="episodePanel" hidden></aside>
+            <div class="video-container">
+                <iframe id="drivePlayer" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="notice-modal" id="videoUnavailableModal" role="dialog" aria-modal="true" aria-labelledby="videoUnavailableTitle" hidden>
+        <div class="notice-card">
+            <h2 id="videoUnavailableTitle">Video aún no disponible</h2>
+            <p id="videoUnavailableMessage">Este video todavía no está disponible.</p>
+            <button type="button" id="closeUnavailableNotice">Entendido</button>
+        </div>
+    </div>
+    <script src="assets/scripts/session.js"></script>
+    <script src="assets/scripts/main.js"></script>
 </body>
-</html>
+</html> 
