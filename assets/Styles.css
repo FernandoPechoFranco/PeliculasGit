@@ -1,0 +1,391 @@
+        :root {
+            --primary: #e50914;
+            --primary-hover: #f40612;
+            --bg-dark: #09090b;
+            --bg-card: #141418;
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* Navbar con efecto cristal */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            transition: background 0.4s ease, backdrop-filter 0.4s ease;
+            background: linear-gradient(to bottom, rgba(9, 9, 11, 0.95) 0%, transparent 100%);
+        }
+
+        nav.scrolled {
+            background: rgba(9, 9, 11, 0.88);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* Hero Banner Principal */
+        .hero {
+            position: relative;
+            height: 85vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 4%;
+            background-size: cover;
+            background-position: center 25%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, var(--bg-dark) 18%, rgba(9, 9, 11, 0.55) 60%, transparent 100%),
+                        linear-gradient(0deg, var(--bg-dark) 6%, transparent 45%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 630px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(229, 9, 20, 0.22);
+            border: 1px solid var(--primary);
+            color: #ff525b;
+            padding: 5px 14px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: 1.5px;
+        }
+
+        .hero-title {
+            font-size: 3.8rem;
+            font-weight: 800;
+            line-height: 1.05;
+            margin-bottom: 16px;
+            text-shadow: 0 4px 25px rgba(0,0,0,0.85);
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: #d4d4d8;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-play {
+            background: var(--text-main);
+            color: var(--bg-dark);
+        }
+
+        .btn-play:hover {
+            background: #e4e4e7;
+            transform: scale(1.04);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.35);
+        }
+
+        .btn-info {
+            background: rgba(255, 255, 255, 0.14);
+            color: var(--text-main);
+            backdrop-filter: blur(8px);
+        }
+
+        .btn-info:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Secciones y Catálogo */
+        .catalog {
+            position: relative;
+            z-index: 20;
+            margin-top: -65px;
+            padding-bottom: 70px;
+        }
+
+        .row {
+            margin-bottom: 48px;
+            padding: 0 4%;
+        }
+
+        .row-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .row-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f4f4f5;
+        }
+
+        .row-tag {
+            background: rgba(229, 9, 20, 0.15);
+            color: #ff4d56;
+            border: 1px solid rgba(229, 9, 20, 0.4);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 22px;
+        }
+
+        /* Tarjeta de Película */
+        .movie-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-card);
+            aspect-ratio: 16 / 9;
+            cursor: pointer;
+            transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.35s;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .movie-card:hover {
+            transform: scale(1.07);
+            z-index: 30;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9), 0 0 0 2px var(--primary);
+        }
+
+        /* Fondo estilizado por si no pones imagen aún */
+        .card-bg-fallback {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, #2e090d, #0d0d10 75%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card-bg-fallback span {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.22);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .movie-card img {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: filter 0.3s;
+            z-index: 2;
+        }
+
+        .movie-card:hover img {
+            filter: brightness(0.35);
+        }
+
+        .card-number {
+            position: absolute;
+            top: 10px;
+            left: 12px;
+            z-index: 3;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background: linear-gradient(to top, rgba(0,0,0,0.96) 15%, transparent 100%);
+        }
+
+        .movie-card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        .card-play-icon {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 52px;
+            height: 52px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 22px rgba(229, 9, 20, 0.8);
+        }
+
+        .movie-card:hover .card-play-icon {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .card-meta {
+            font-size: 0.8rem;
+            color: #4ade80;
+            font-weight: 600;
+        }
+
+        /* Modal Reproductor Google Drive */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .player-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .player-wrapper:fullscreen {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 2;
+            padding: 10px 16px;
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: white;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .close-btn:hover {
+            background: var(--primary);
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            flex: 1;
+            min-height: 0;
+            background: #050505;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    
