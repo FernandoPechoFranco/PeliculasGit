@@ -174,6 +174,40 @@
         const unavailableModal = document.getElementById('videoUnavailableModal');
         const unavailableMessage = document.getElementById('videoUnavailableMessage');
         const closeUnavailableNotice = document.getElementById('closeUnavailableNotice');
+        let orientationLockActive = false;
+        let orientationRequestId = 0;
+
+        function actualizarRotacionReproductor() {
+            const rotarEnMovil = modal.classList.contains('active')
+                && window.matchMedia('(max-width: 760px) and (orientation: portrait)').matches;
+            modal.classList.toggle('mobile-landscape', rotarEnMovil);
+        }
+
+        function prepararOrientacionReproductor() {
+            const requestId = ++orientationRequestId;
+            const esMovilVertical = window.matchMedia('(max-width: 760px) and (orientation: portrait)').matches;
+
+            if (!esMovilVertical || !screen.orientation || typeof screen.orientation.lock !== 'function') {
+                actualizarRotacionReproductor();
+                return;
+            }
+
+            screen.orientation.lock('landscape').then(() => {
+                if (requestId !== orientationRequestId || !modal.classList.contains('active')) {
+                    screen.orientation.unlock();
+                    return;
+                }
+                orientationLockActive = true;
+                modal.classList.remove('mobile-landscape');
+            }).catch((error) => {
+                if (requestId === orientationRequestId) {
+                    modal.classList.add('mobile-landscape');
+                    console.warn('No se pudo bloquear la orientación; se usará la vista horizontal adaptada.', error);
+                }
+            });
+        }
+
+        window.addEventListener('resize', actualizarRotacionReproductor);
 
         function mostrarAvisoVideoNoDisponible(mensaje) {
             unavailableMessage.textContent = mensaje || "Estamos preparando este video. Estará disponible próximamente.";
@@ -210,6 +244,7 @@
 
             drivePlayer.src = convertirLinkDrive(pelicula.driveUrl);
             modal.classList.add('active');
+            prepararOrientacionReproductor();
         }
 
         function mostrarTemporada(serie, numeroTemporada) {
@@ -268,11 +303,18 @@
 
             mostrarTemporada(serie, 1);
             modal.classList.add('active');
+            prepararOrientacionReproductor();
         }
 
         // Cerrar al hacer clic fuera de la ventana del reproductor
         function cerrarVideo() {
             modal.classList.remove('active');
+            modal.classList.remove('mobile-landscape');
+            orientationRequestId += 1;
+            if (orientationLockActive) {
+                screen.orientation.unlock();
+                orientationLockActive = false;
+            }
             drivePlayer.src = "";
             playerWrapper.classList.remove('series-player');
             episodePanel.hidden = true;
