@@ -48,6 +48,15 @@
             letter-spacing: -1px;
             text-transform: uppercase;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
         }
 
         .nav-links {
