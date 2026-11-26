@@ -91,7 +91,7 @@
                 categoria: "tendencias",
                 anio: "1997 • Romance • HD",
                 imagen: "https://image.tmdb.org/t/p/w342//VMOt5scbGmBKDvkfHjZN6Ki54i.jpg",
-                driveUrl: ""
+                driveUrl: "https://drive.google.com/file/d/12EGBfu6QHU9lg8CWufQwpLekABhcA74u/view?usp=sharing"
             },
             {
                 titulo: "El drama",
@@ -398,4 +398,25 @@
         // Iniciar aplicación
         cargarCatalogo();
         configurarBuscador();
+
+        function iniciarCargaInicial() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const loadingProgress = document.getElementById('loadingProgress');
+            const loadingText = document.getElementById('loadingText');
+            let progress = 0;
+
+            const timer = setInterval(() => {
+                progress += progress < 70 ? 7 : progress < 92 ? 3 : 1;
+                progress = Math.min(progress, 100);
+                loadingProgress.style.width = `${progress}%`;
+
+                if (progress >= 100) {
+                    clearInterval(timer);
+                    loadingText.textContent = "¡Listo!";
+                    setTimeout(() => loadingScreen.classList.add('finished'), 300);
+                }
+            }, 90);
+        }
+
+        iniciarCargaInicial();
     
