@@ -147,6 +147,31 @@
         const drivePlayer = document.getElementById('drivePlayer');
         const playerWrapper = document.querySelector('.player-wrapper');
         const episodePanel = document.getElementById('episodePanel');
+        const unavailableModal = document.getElementById('videoUnavailableModal');
+        const unavailableMessage = document.getElementById('videoUnavailableMessage');
+        const closeUnavailableNotice = document.getElementById('closeUnavailableNotice');
+
+        function mostrarAvisoVideoNoDisponible(mensaje) {
+            unavailableMessage.textContent = mensaje || "Estamos preparando este video. Estará disponible próximamente.";
+            unavailableModal.hidden = false;
+            closeUnavailableNotice.focus();
+        }
+
+        function cerrarAvisoVideoNoDisponible() {
+            unavailableModal.hidden = true;
+        }
+
+        closeUnavailableNotice.addEventListener('click', cerrarAvisoVideoNoDisponible);
+        unavailableModal.addEventListener('click', (event) => {
+            if (event.target === unavailableModal) {
+                cerrarAvisoVideoNoDisponible();
+            }
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !unavailableModal.hidden) {
+                cerrarAvisoVideoNoDisponible();
+            }
+        });
 
         // Abrir reproductor
         function abrirVideo(pelicula) {
@@ -155,7 +180,7 @@
             episodePanel.innerHTML = "";
 
             if (!pelicula.driveUrl) {
-                alert("Todavía no hay un enlace de Drive configurado para esta película.");
+                mostrarAvisoVideoNoDisponible("Estamos preparando esta película. Estará disponible próximamente.");
                 return;
             }
 
@@ -184,7 +209,7 @@
 
                     const episodio = episodios[index];
                     if (!episodio.driveUrl) {
-                        alert(`Falta el enlace de Drive para ${episodio.titulo} - Temporada ${numeroTemporada}.`);
+                        mostrarAvisoVideoNoDisponible(`Estamos preparando ${episodio.titulo} de la temporada ${numeroTemporada}. Estará disponible próximamente.`);
                         drivePlayer.src = "";
                         return;
                     }
