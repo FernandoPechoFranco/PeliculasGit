@@ -153,6 +153,7 @@
         const drivePlayer = document.getElementById('drivePlayer');
         const playerWrapper = document.querySelector('.player-wrapper');
         const episodePanel = document.getElementById('episodePanel');
+        const episodeListToggle = document.getElementById('episodeListToggle');
         const unavailableModal = document.getElementById('videoUnavailableModal');
         const unavailableMessage = document.getElementById('videoUnavailableMessage');
         const closeUnavailableNotice = document.getElementById('closeUnavailableNotice');
@@ -168,6 +169,13 @@
         }
 
         closeUnavailableNotice.addEventListener('click', cerrarAvisoVideoNoDisponible);
+        episodeListToggle.addEventListener('click', () => {
+            playerWrapper.classList.remove('episode-playing');
+            const activeEpisode = episodePanel.querySelector('.episode-button.active');
+            if (activeEpisode) {
+                activeEpisode.focus();
+            }
+        });
         unavailableModal.addEventListener('click', (event) => {
             if (event.target === unavailableModal) {
                 cerrarAvisoVideoNoDisponible();
@@ -182,6 +190,7 @@
         // Abrir reproductor
         function abrirVideo(pelicula) {
             playerWrapper.classList.remove('series-player');
+            playerWrapper.classList.remove('episode-playing');
             episodePanel.hidden = true;
             episodePanel.innerHTML = "";
 
@@ -220,6 +229,7 @@
                         return;
                     }
                     drivePlayer.src = convertirLinkDrive(episodio.driveUrl);
+                    playerWrapper.classList.add('episode-playing');
                 });
             });
         }
@@ -227,6 +237,7 @@
         function abrirSerie(serie) {
             drivePlayer.src = "";
             playerWrapper.classList.add('series-player');
+            playerWrapper.classList.remove('episode-playing');
             episodePanel.hidden = false;
             episodePanel.innerHTML = `
                 <div class="episode-header">
@@ -257,6 +268,7 @@
             modal.classList.remove('active');
             drivePlayer.src = "";
             playerWrapper.classList.remove('series-player');
+            playerWrapper.classList.remove('episode-playing');
             episodePanel.hidden = true;
             episodePanel.innerHTML = "";
         }
