@@ -99,7 +99,7 @@
                 categoria: "tendencias",
                 anio: "2026 • Drama • HD",
                 imagen: "https://m.media-amazon.com/images/S/pv-target-images/0e45196fab4af58a53ab6b4ea5b3c41e77d06515a58fcf9f742babf2712af5f1.jpg",
-                driveUrl: "https://drive.google.com/file/d/174LRlbHOAP0mgUI-QUUoVq4sfJFVI3Ox/view?usp=sharing"
+                driveUrl: "https://drive.google.com/file/d/174LRlbHOAP0mgUI-QUUoVq4sfJFVI3Ox/view?usp=sharin"
             },
 
             // --- SERIES ---
