@@ -22,8 +22,8 @@
                 categoria: "conjuro",
                 anio: "2016 • Terror • Full HD",
                 imagen: "https://image.tmdb.org/t/p/original/AtwMXjMs7zDrTAM8L6SnaF5Qqzl.jpg",
-                // Pega aquí tu link de Google Drive de El Conjuro 2
-                driveUrl: "https://drive.google.com/file/d/1ME1vhE_iSYmE4Mc4EJLGTFBAWbrnayqJ/view?usp=sharing"
+                // Link compartido de Dropbox de El Conjuro 2
+                driveUrl: "https://www.dropbox.com/scl/fi/9yuso66qtblqwr9b5miu9/Theconjuring2.mp4?rlkey=1iub4dbaf6m2y1ls5y5uhz0tp&st=ppmngtml&dl=0"
             },
             {
                 titulo: "El Conjuro 3: El Diablo me Obligó a Hacerlo",
@@ -140,6 +140,10 @@
         // FUNCIÓN AUTOMÁTICA PARA CONVERTIR LINK DE GOOGLE DRIVE A REPRODUCTOR
         // =========================================================================
         function convertirLinkDrive(url) {
+            if (url.includes("dropbox.com")) {
+                return url.replace(/([?&])dl=[01]/, "$1raw=1");
+            }
+
             const regex = /(?:\/d\/|id=)([a-zA-Z0-9_-]+)/;
             const match = url.match(regex);
             if (match && match[1]) {
