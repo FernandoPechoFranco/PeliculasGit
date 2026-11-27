@@ -63,20 +63,7 @@
             },
 
             // --- TENDENCIAS ---
-            {
-                titulo: "Noches de Neón",
-                categoria: "tendencias",
-                anio: "2025 • 4K",
-                imagen: "https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=800&q=80",
-                driveUrl: ""
-            },
-            {
-                titulo: "Abismo Espacial",
-                categoria: "tendencias",
-                anio: "2026 • Full HD",
-                imagen: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
-                driveUrl: ""
-            },
+            
             {
                 titulo: "Spider-Man: Un nuevo día",
                 etiqueta: "Nueva película",
@@ -99,7 +86,7 @@
                 categoria: "tendencias",
                 anio: "2026 • Drama • HD",
                 imagen: "https://m.media-amazon.com/images/S/pv-target-images/0e45196fab4af58a53ab6b4ea5b3c41e77d06515a58fcf9f742babf2712af5f1.jpg",
-                driveUrl: ""
+                driveUrl: "https://drive.google.com/file/d/174LRlbHOAP0mgUI-QUUoVq4sfJFVI3Ox/view?usp=sharing"
             },
 
             // --- SERIES ---
@@ -122,20 +109,7 @@
             },
 
             // --- ACCIÓN ---
-            {
-                titulo: "Velocidad Extrema",
-                categoria: "accion",
-                anio: "2026 • 4K",
-                imagen: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80",
-                driveUrl: ""
-            },
-            {
-                titulo: "Cumbre Helada",
-                categoria: "accion",
-                anio: "2025 • Full HD",
-                imagen: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80",
-                driveUrl: ""
-            },
+            
             {
                 titulo: "Los Ángeles de Charlie",
                 etiqueta: "Película 1",
